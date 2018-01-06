@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
 //this is main layout
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_home);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
