@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetDialog.setContentView(parentview);
                 BottomSheetBehavior bottomSheetBehavior=BottomSheetBehavior.from((View)parentview.getParent());
                 bottomSheetBehavior.setPeekHeight(
-                        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,300,getResources().getDisplayMetrics()));
+                        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,550,getResources().getDisplayMetrics()));
                 bottomSheetDialog.show();
             }
         });

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back">
-
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -26,11 +25,10 @@
         android:padding="@dimen/margin5"
         android:layout_marginLeft="5dp" />
     <ImageView
-
         android:layout_margin="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/cancel"/>
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/ic_close"/>
     </LinearLayout>
 
     <TextView
@@ -41,11 +39,177 @@
         android:layout_margin="@dimen/margin10"
         android:textSize="@dimen/textsize1"
         android:text="Sort By"/>
+
 <LinearLayout
+    android:layout_marginRight="@dimen/margin10"
+    android:layout_marginLeft="@dimen/margin10"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stars"
+        android:layout_weight="1"
+        android:textAllCaps="false"
+        android:id="@+id/star"
+        android:background="@drawable/click" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forks"
+        android:layout_weight="1"
+        android:textAllCaps="false"
+        android:layout_marginLeft="@dimen/margin5"
+        android:layout_marginRight="@dimen/margin5"
+        android:id="@+id/forks"
+        android:background="@drawable/click" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Updated"
+        android:layout_weight="1"
+        android:id="@+id/updated"
+        android:background="@drawable/click" />
 </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/margin10"
+        android:textSize="@dimen/textsize1"
+        android:text="Created Date Range"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/margin5"
+        android:layout_margin="@dimen/margin10">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="From Date"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="@dimen/margin5"
+                    android:textSize="@dimen/textsize1"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="From Date"
+                    android:id="@+id/fromdate"
+                    android:gravity="center"
+                    android:padding="@dimen/margin5"
+                    android:textSize="@dimen/textsize1" />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_gravity="center"
+                android:layout_height="60dp"
+                android:scaleType="fitXY"
+                android:background="@color/black" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="To Date"
+                    android:gravity="center"
+                    android:padding="@dimen/margin5"
+                    android:textSize="@dimen/textsize1"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="From Date"
+                    android:gravity="center"
+                    android:id="@+id/todate"
+                    android:padding="@dimen/margin5"
+                    android:textSize="@dimen/textsize1" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/margin10"
+        android:textSize="@dimen/textsize1"
+        android:text="Sort By"/>
+
+    <LinearLayout
+        android:layout_marginRight="@dimen/margin10"
+        android:layout_marginLeft="@dimen/margin10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desc"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:id="@+id/Desc"
+            android:layout_marginRight="@dimen/margin5"
+            android:background="@drawable/click" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Asc"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:id="@+id/Asc"
+            android:background="@drawable/click" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/margin10"
+        android:background="@color/colorAccent"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/refresh"/>
+            <ImageView
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/checked"/>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>
