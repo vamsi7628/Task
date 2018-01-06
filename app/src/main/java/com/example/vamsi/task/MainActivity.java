@@ -1,6 +1,8 @@
 package com.example.vamsi.task;
 
 import android.app.SearchManager;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
 
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     HomepageAdapter homepageAdapter;
     String keyword;
+    BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +36,13 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(MainActivity.this);
+                View parentview=getLayoutInflater().inflate(R.layout.bottomsheet,null);
+                bottomSheetDialog.setContentView(parentview);
+                BottomSheetBehavior bottomSheetBehavior=BottomSheetBehavior.from((View)parentview.getParent());
+                bottomSheetBehavior.setPeekHeight(
+                        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,300,getResources().getDisplayMetrics()));
+                bottomSheetDialog.show();
             }
         });
 
