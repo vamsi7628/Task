@@ -205,12 +205,14 @@
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_width="22dp"
+                android:id="@+id/refresh"
                 android:layout_height="22dp"
                 android:src="@drawable/refresh"/>
             <ImageView
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_width="22dp"
+                android:id="@+id/checked"
                 android:layout_height="22dp"
                 android:src="@drawable/checked"/>
         </LinearLayout>

@@ -38,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin10"
                     android:text="#05673"
+                    android:layout_marginTop="@dimen/margin15"
                     android:textColor="#f90d0d"
                     android:textSize="@dimen/textsize" />
 
@@ -87,7 +88,7 @@
                             android:layout_marginLeft="7dp"
                             android:gravity="center"
                             android:layout_gravity="center"
-                            android:textSize="@dimen/textsize"/>
+                            android:textSize="@dimen/textsizesmall"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -110,7 +111,7 @@
                             android:layout_marginLeft="7dp"
                             android:gravity="center"
                             android:layout_gravity="center"
-                            android:textSize="@dimen/textsize"/>
+                            android:textSize="@dimen/textsizesmall"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -133,7 +134,7 @@
                             android:layout_marginLeft="7dp"
                             android:gravity="center"
                             android:layout_gravity="center"
-                            android:textSize="@dimen/textsize"/>
+                            android:textSize="@dimen/textsizesmall"/>
                     </LinearLayout>
                 </LinearLayout>
 

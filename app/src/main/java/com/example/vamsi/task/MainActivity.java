@@ -40,13 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     HomepageAdapter homepageAdapter;
-    String keyword;
     BottomSheetBehavior bottomSheetBehavior;
     String dateSelect;
     Button clickedBtn = null;
+    Button clicked = null;
     String url;
-    StringBuffer filter;
-
+    String filter = "";
+    String sortBy = "", fromDate = "", toDate="",orderBy ="";
+    String searchQuery = "android";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                filter=new StringBuffer();
+                //filter=new StringBuffer();
                 final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this);
                 View parentview = getLayoutInflater().inflate(R.layout.bottomsheet, null);
                 bottomSheetDialog.setContentView(parentview);
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         bottomSheetDialog.dismiss();
+
                     }
                 });
 
@@ -86,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         btnClicked(b);
-                        filter.append("&sort=star");
+                        //filter.append("&sort=star");
+                        sortBy = "&sort=star";
                     }
                 });
                 final Button b1 = (Button) parentview.findViewById(R.id.forks);
@@ -94,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         btnClicked(b1);
-                        filter.append("&sort=forks");
+                        //filter.append("&sort=forks");
+                        sortBy = "&sort=forks";
                     }
                 });
                 final Button b2 = (Button) parentview.findViewById(R.id.updated);
@@ -102,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         btnClicked(b2);
-                        filter.append("&sort=updated");
+                        //filter.append("&sort=updated");
+                        sortBy = "&sort=updated";
                     }
                 });
 
@@ -110,16 +115,18 @@ public class MainActivity extends AppCompatActivity {
                 desc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        btnClicked(desc);
-                        filter.append("&order=desc");
+                        btnClickedorder(desc);
+                        //filter.append("&order=desc");
+                        orderBy = "&order=desc";
                     }
                 });
                 final Button asc = (Button) parentview.findViewById(R.id.asc);
                 asc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        btnClicked(asc);
-                        filter.append("&order=asc");
+                        btnClickedorder(asc);
+                        //filter.append("&order=asc");
+                        orderBy = "&order=asc";
                     }
                 });
 
@@ -133,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
                 final TextView from = (TextView) parentview.findViewById(R.id.from);
                 final int year = calendar.get(Calendar.YEAR);
                 from.setText("" + year + "-" + (month + 1) + "-" + day);
-                LinearLayout fromdate = (LinearLayout) parentview.findViewById(R.id.fromdate);
+                final LinearLayout fromdate = (LinearLayout) parentview.findViewById(R.id.fromdate);
+                final LinearLayout todate = (LinearLayout) parentview.findViewById(R.id.todate);
+                todate.setEnabled(false);
                 fromdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -146,17 +155,17 @@ public class MainActivity extends AppCompatActivity {
                                     dateSelect = "" + year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth;
                                 else
                                     dateSelect = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                                fromDate = "&created:"+dateSelect;
                                 Log.i("date", dateSelect);
+                                todate.setEnabled(true);
                             }
                         }, year, month, day);
-                        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                         datePickerDialog.show();
                     }
                 });
 
                 final TextView to = (TextView) parentview.findViewById(R.id.to);
                 from.setText("" + year + "-" + (month + 1) + "-" + day);
-                LinearLayout todate = (LinearLayout) parentview.findViewById(R.id.todate);
                 todate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -169,11 +178,53 @@ public class MainActivity extends AppCompatActivity {
                                     dateSelect = "" + year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth;
                                 else
                                     dateSelect = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                                toDate = ".."+dateSelect;
                                 Log.i("date", dateSelect);
                             }
                         }, year, month, day);
                         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                         datePickerDialog.show();
+                    }
+                });
+
+                if(sortBy.contains("forks")){
+                    b1.setBackgroundResource(R.drawable.background);
+                    clickedBtn = b1;
+                } else if(sortBy.contains("star")){
+                    b1.setBackgroundResource(R.drawable.background);
+                    clickedBtn = b;
+                } else if(sortBy.contains("updated")){
+                    b1.setBackgroundResource(R.drawable.background);
+                    clickedBtn = b2;
+                }
+                from.setText(fromDate);
+                to.setText(toDate);
+
+                if(orderBy.contains("desc")){
+                    b1.setBackgroundResource(R.drawable.background);
+                    clickedBtn = desc;
+                }else if(orderBy.contains("asc")){
+                    b1.setBackgroundResource(R.drawable.background);
+                    clickedBtn = asc;
+                }
+
+                ImageView checked=(ImageView)parentview.findViewById(R.id.checked);
+                checked.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        filter=sortBy+fromDate+toDate+orderBy;
+                        bottomSheetDialog.dismiss();
+                        searchRepo(searchQuery);
+                    }
+                });
+
+                ImageView refresh=parentview.findViewById(R.id.refresh);
+                refresh.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        filter="";
+                        bottomSheetDialog.dismiss();
+                        searchRepo(searchQuery);
                     }
                 });
 
@@ -185,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(homepageAdapter);
-        searchRepo("android");
+        searchRepo(searchQuery);
     }
 
     void btnClicked(Button v) {
@@ -196,13 +247,21 @@ public class MainActivity extends AppCompatActivity {
         clickedBtn = v;
     }
 
+    void btnClickedorder(Button v) {
+        if (clicked != null) {
+            clicked.setBackgroundResource(R.drawable.background1);
+        }
+        v.setBackgroundResource(R.drawable.background);
+        clicked = v;
+    }
 
-    void searchRepo(String query) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url +query, null, new Response.Listener<JSONObject>() {
+    void searchRepo(final String query) {
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url +query+filter, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.i("Searched repos", String.valueOf(response));
+                    Log.i("Searched repos", url+query+filter);
                     JSONArray items = response.getJSONArray("items");
                     homepageAdapter.dataChanged(items);
                     homepageAdapter.notifyDataSetChanged();
@@ -231,9 +290,10 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                keyword = query.toString();
-                Log.i("Text submited", keyword);
-                searchRepo(keyword);
+                searchQuery = query.toString();
+                Log.i("Text submited", searchQuery);
+
+                searchRepo(searchQuery);
                 return false;
             }
 

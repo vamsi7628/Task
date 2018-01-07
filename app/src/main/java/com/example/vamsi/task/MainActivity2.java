@@ -19,17 +19,24 @@ import android.test.mock.MockApplication;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.vamsi.task.Adapter.ContributorsAdapter;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity2 extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    CircleImageView user_image;
     ContributorsAdapter contributorsAdapter;
-        JSONObject cureentrepo;
+    JSONObject currentrepo;
+    TextView project_link,description;
 
 
     @SuppressLint("WrongViewCast")
@@ -40,24 +47,41 @@ public class MainActivity2 extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ActionBar ab=getActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+        user_image=(CircleImageView)findViewById(R.id.iamge_icon);
+        project_link=(TextView)findViewById(R.id.project_link);
+        description=(TextView)findViewById(R.id.description);
 
 
         String name=getIntent().getStringExtra("currentrep");
 
         try {
-            cureentrepo=new JSONObject(name);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            currentrepo=new JSONObject(name);
+            JSONObject owner=currentrepo.getJSONObject("owner");
+            String url_contributors=currentrepo.getString("contributors_url");
+            String current_username=currentrepo.getString("name");
+            getSupportActionBar().setTitle(current_username);
+            project_link.setText(currentrepo.getString("html_url"));
+            description.setText(currentrepo.getString("description"));
+            Picasso.with(this).load(owner.getString("avatar_url")).into(user_image);
 
-        try {
-            String url_contributors=cureentrepo.getString("contributors_url");
             Log.i("Contributor",url_contributors);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+project_link.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+            Intent i=new Intent(MainActivity2.this,Webview.class);
+            i.putExtra("link", currentrepo.toString());
+            startActivity(i);
+    }
+});
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
