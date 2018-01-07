@@ -1,6 +1,7 @@
 package com.example.vamsi.task;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
@@ -41,10 +42,11 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     HomepageAdapter homepageAdapter;
     BottomSheetBehavior bottomSheetBehavior;
-    String dateSelect;
+    String dateSelect,dateSelect1;
     Button clickedBtn = null;
     Button clicked = null;
     String url;
+    ProgressDialog progressDialog;
     String filter = "";
     String sortBy = "", fromDate = "", toDate="",orderBy ="";
     String searchQuery = "android";
@@ -57,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         url = "https://api.github.com/search/repositories?q=";
 
 //this is main layout
-
+        progressDialog=new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("its Loading");
+        progressDialog.show();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_home);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,16 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetBehavior.setPeekHeight(
                         (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 550, getResources().getDisplayMetrics()));
                 bottomSheetDialog.show();
-
-
-                ImageView imageView = (ImageView) parentview.findViewById(R.id.cancel);
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bottomSheetDialog.dismiss();
-
-                    }
-                });
 
                 final Button b = (Button) parentview.findViewById(R.id.star);
                 b.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
                 final TextView from = (TextView) parentview.findViewById(R.id.from);
                 final int year = calendar.get(Calendar.YEAR);
-                from.setText("" + year + "-" + (month + 1) + "-" + day);
                 final LinearLayout fromdate = (LinearLayout) parentview.findViewById(R.id.fromdate);
                 final LinearLayout todate = (LinearLayout) parentview.findViewById(R.id.todate);
                 todate.setEnabled(false);
@@ -165,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 final TextView to = (TextView) parentview.findViewById(R.id.to);
-                from.setText("" + year + "-" + (month + 1) + "-" + day);
                 todate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -175,37 +167,34 @@ public class MainActivity extends AppCompatActivity {
 
                                 to.setText("" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                                 if (dayOfMonth < 10)
-                                    dateSelect = "" + year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth;
+                                    dateSelect1 = "" + year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth;
                                 else
-                                    dateSelect = "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                                toDate = ".."+dateSelect;
-                                Log.i("date", dateSelect);
+                                    dateSelect1= "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                                toDate = ".."+dateSelect1;
+                                Log.i("date", dateSelect1);
                             }
                         }, year, month, day);
-                        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                         datePickerDialog.show();
                     }
                 });
 
-                if(sortBy.contains("forks")){
+                if(sortBy.contains("star")){
+                    b.setBackgroundResource(R.drawable.background);
+                    clickedBtn =b;
+                } else if(sortBy.contains("forks")){
                     b1.setBackgroundResource(R.drawable.background);
                     clickedBtn = b1;
-                } else if(sortBy.contains("star")){
-                    b1.setBackgroundResource(R.drawable.background);
-                    clickedBtn = b;
                 } else if(sortBy.contains("updated")){
-                    b1.setBackgroundResource(R.drawable.background);
+                    b2.setBackgroundResource(R.drawable.background);
                     clickedBtn = b2;
                 }
-                from.setText(fromDate);
-                to.setText(toDate);
 
                 if(orderBy.contains("desc")){
-                    b1.setBackgroundResource(R.drawable.background);
-                    clickedBtn = desc;
+                    desc.setBackgroundResource(R.drawable.background);
+                    clicked = desc;
                 }else if(orderBy.contains("asc")){
-                    b1.setBackgroundResource(R.drawable.background);
-                    clickedBtn = asc;
+                    asc.setBackgroundResource(R.drawable.background);
+                    clicked = asc;
 
                 }
 
@@ -213,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 checked.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        progressDialog.show();
                         filter=sortBy+fromDate+toDate+orderBy;
                         bottomSheetDialog.dismiss();
                         searchRepo(searchQuery);
@@ -223,9 +213,27 @@ public class MainActivity extends AppCompatActivity {
                 refresh.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        progressDialog.show();
                         filter="";
+                        orderBy="";
+                        sortBy="";
+                       from.setText("");
+                       to.setText("");
                         bottomSheetDialog.dismiss();
                         searchRepo(searchQuery);
+                    }
+                });
+
+                ImageView imageView = (ImageView) parentview.findViewById(R.id.cancel);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.dismiss();
+                        orderBy="";
+                        sortBy="";
+                        fromDate="";
+                        toDate="";
+                        filter="";
                     }
                 });
 
@@ -248,12 +256,12 @@ public class MainActivity extends AppCompatActivity {
         clickedBtn = v;
     }
 
-    void btnClickedorder(Button v) {
+    void btnClickedorder(Button a) {
         if (clicked != null) {
             clicked.setBackgroundResource(R.drawable.background1);
         }
-        v.setBackgroundResource(R.drawable.background);
-        clicked = v;
+        a.setBackgroundResource(R.drawable.background);
+        clicked = a;
     }
 
     void searchRepo(final String query) {
@@ -262,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    progressDialog.dismiss();
                     Log.i("Searched repos", url+query+filter);
                     JSONArray items = response.getJSONArray("items");
                     homepageAdapter.dataChanged(items);
@@ -291,6 +300,8 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                progressDialog.show();
+
                 searchQuery = query.toString();
                 Log.i("Text submited", searchQuery);
 
