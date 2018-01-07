@@ -23,7 +23,7 @@
                 android:layout_width="100dp"
                 android:layout_height="90dp"
                 android:src="@drawable/empty_photo"
-                android:id="@+id/image"
+                android:id="@+id/iconimage"
                 android:layout_margin="@dimen/margin10"/>
 
             <LinearLayout

@@ -55,7 +55,7 @@
         android:layout_weight="1"
         android:textAllCaps="false"
         android:id="@+id/star"
-        android:background="@drawable/click" />
+        android:background="@drawable/background1" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         android:layout_marginLeft="@dimen/margin5"
         android:layout_marginRight="@dimen/margin5"
         android:id="@+id/forks"
-        android:background="@drawable/click" />
+        android:background="@drawable/background1" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
         android:textAllCaps="false"
         android:layout_weight="1"
         android:id="@+id/updated"
-        android:background="@drawable/click" />
+        android:background="@drawable/background1" />
 </LinearLayout>
     <TextView
         android:layout_width="match_parent"

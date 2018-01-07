@@ -3,6 +3,7 @@ package com.example.vamsi.task;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.media.MediaActionSound;
@@ -15,15 +16,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.test.mock.MockApplication;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.example.vamsi.task.Adapter.ContributorsAdapter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity2 extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ContributorsAdapter contributorsAdapter;
+        JSONObject cureentrepo;
+
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -34,6 +41,23 @@ public class MainActivity2 extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        String name=getIntent().getStringExtra("currentrep");
+
+        try {
+            cureentrepo=new JSONObject(name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String url_contributors=cureentrepo.getString("contributors_url");
+            Log.i("Contributor",url_contributors);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
