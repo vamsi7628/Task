@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     String dateSelect;
     Button clickedBtn = null;
     String url;
+    StringBuffer filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                filter=new StringBuffer();
                 final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this);
                 View parentview = getLayoutInflater().inflate(R.layout.bottomsheet, null);
                 bottomSheetDialog.setContentView(parentview);
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         btnClicked(b);
+                        filter.append("&sort=star");
                     }
                 });
                 final Button b1 = (Button) parentview.findViewById(R.id.forks);
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         btnClicked(b1);
+                        filter.append("&sort=forks");
                     }
                 });
                 final Button b2 = (Button) parentview.findViewById(R.id.updated);
@@ -97,21 +102,24 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         btnClicked(b2);
+                        filter.append("&sort=updated");
                     }
                 });
 
-                Button desc = (Button) parentview.findViewById(R.id.desc);
+                final Button desc = (Button) parentview.findViewById(R.id.desc);
                 desc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        btnClicked(desc);
+                        filter.append("&order=desc");
                     }
                 });
-                Button asc = (Button) parentview.findViewById(R.id.asc);
+                final Button asc = (Button) parentview.findViewById(R.id.asc);
                 asc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        btnClicked(asc);
+                        filter.append("&order=asc");
                     }
                 });
 
@@ -190,7 +198,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     void searchRepo(String query) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url + query, null, new Response.Listener<JSONObject>() {
+
+
+        StringBuffer q=new StringBuffer();
+        q.append(query);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url +q.toString(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
