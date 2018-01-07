@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        url = "https://api.github.com/search/repositories?q=topic:";
+        url = "https://api.github.com/search/repositories?q=";
 
 //this is main layout
 
@@ -198,11 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     void searchRepo(String query) {
-
-
-        StringBuffer q=new StringBuffer();
-        q.append(query);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url +q.toString(), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url +query, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {

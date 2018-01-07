@@ -54,7 +54,11 @@ public class HomepageAdapter extends RecyclerView.Adapter<HomepageAdapter.Custom
         try {
             JSONObject currestRepo = repos.getJSONObject(position);
             JSONObject owner=currestRepo.getJSONObject("owner");
-            holder.name.setText(currestRepo.getString("full_name"));
+            holder.name.setText(currestRepo.getString("name"));
+            holder.data.setText(currestRepo.getString("full_name"));
+            holder.eye.setText(currestRepo.getString("watchers_count"));
+            holder.star.setText(currestRepo.getString("stargazers_count"));
+            holder.link.setText(currestRepo.getString("forks"));
             Picasso.with(context).load(owner.getString("avatar_url")).into(holder.image);
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
