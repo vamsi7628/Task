@@ -28,6 +28,7 @@
         android:layout_margin="15dp"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:id="@+id/cancel"
         android:src="@drawable/ic_close"/>
     </LinearLayout>
 
@@ -69,6 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Updated"
+        android:textAllCaps="false"
         android:layout_weight="1"
         android:id="@+id/updated"
         android:background="@drawable/click" />
@@ -94,6 +96,7 @@
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_weight="1"
+                android:id="@+id/fromdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -112,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="From Date"
-                    android:id="@+id/fromdate"
+                    android:id="@+id/from"
                     android:gravity="center"
                     android:padding="@dimen/margin5"
                     android:textSize="@dimen/textsize1" />
@@ -127,6 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:id="@+id/todate"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -141,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:text="From Date"
                     android:gravity="center"
-                    android:id="@+id/todate"
+                    android:id="@+id/to"
                     android:padding="@dimen/margin5"
                     android:textSize="@dimen/textsize1" />
             </LinearLayout>
@@ -169,7 +173,7 @@
             android:text="Desc"
             android:layout_weight="1"
             android:textAllCaps="false"
-            android:id="@+id/Desc"
+            android:id="@+id/desc"
             android:layout_marginRight="@dimen/margin5"
             android:background="@drawable/click" />
         <Button
@@ -178,7 +182,7 @@
             android:text="Asc"
             android:layout_weight="1"
             android:textAllCaps="false"
-            android:id="@+id/Asc"
+            android:id="@+id/asc"
             android:background="@drawable/click" />
     </LinearLayout>
 

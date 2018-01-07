@@ -1,5 +1,6 @@
 package com.example.vamsi.task;
 
+import android.app.DatePickerDialog;
 import android.app.SearchManager;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
@@ -11,11 +12,20 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.vamsi.task.Adapter.HomepageAdapter;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     HomepageAdapter homepageAdapter;
     String keyword;
     BottomSheetBehavior bottomSheetBehavior;
+    String dateSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +47,112 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(MainActivity.this);
+                final BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(MainActivity.this);
                 View parentview=getLayoutInflater().inflate(R.layout.bottomsheet,null);
                 bottomSheetDialog.setContentView(parentview);
-                BottomSheetBehavior bottomSheetBehavior=BottomSheetBehavior.from((View)parentview.getParent());
+                final BottomSheetBehavior bottomSheetBehavior=BottomSheetBehavior.from((View)parentview.getParent());
                 bottomSheetBehavior.setPeekHeight(
                         (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,550,getResources().getDisplayMetrics()));
                 bottomSheetDialog.show();
+
+
+                ImageView imageView=(ImageView)parentview.findViewById(R.id.cancel);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+
+                Button b=(Button)parentview.findViewById(R.id.star);
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                Button b1=(Button)parentview.findViewById(R.id.forks);
+                b1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                Button b2=(Button)parentview.findViewById(R.id.updated);
+                b2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+                Button desc=(Button)parentview.findViewById(R.id.desc);
+                desc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                Button asc=(Button)parentview.findViewById(R.id.asc);
+                asc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                Calendar calendar = Calendar.getInstance();
+                final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+                final int day = calendar.get(Calendar.DAY_OF_MONTH);
+                final int month = calendar.get(Calendar.MONTH);
+
+
+                final TextView from=(TextView)parentview.findViewById(R.id.from);
+                final int year = calendar.get(Calendar.YEAR);
+                from.setText("" + year + "-" + (month + 1) + "-" + day);
+                LinearLayout fromdate=(LinearLayout)parentview.findViewById(R.id.fromdate);
+                fromdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                                from.setText("" + year  + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                if (dayOfMonth<10)
+                                    dateSelect= "" + year  + "-" + (monthOfYear + 1) + "-0" +dayOfMonth ;
+                                else
+                                    dateSelect= "" + year  + "-" + (monthOfYear + 1) + "-" +dayOfMonth ;
+                                Log.i("date",dateSelect);
+                            }
+                        }, year, month, day);
+                        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                        datePickerDialog.show();
+                    }
+                });
+
+                final TextView to=(TextView)parentview.findViewById(R.id.to);
+                from.setText("" + year + "-" + (month + 1) + "-" + day);
+                LinearLayout todate=(LinearLayout)parentview.findViewById(R.id.todate);
+                todate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                                to.setText("" + year  + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                if (dayOfMonth<10)
+                                    dateSelect= "" + year  + "-" + (monthOfYear + 1) + "-0" +dayOfMonth ;
+                                else
+                                    dateSelect= "" + year  + "-" + (monthOfYear + 1) + "-" +dayOfMonth ;
+                                Log.i("date",dateSelect);
+                            }
+                        }, year, month, day);
+                        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                        datePickerDialog.show();
+                    }
+                });
+
             }
         });
 
