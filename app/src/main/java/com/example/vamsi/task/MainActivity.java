@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if(orderBy.contains("asc")){
                     b1.setBackgroundResource(R.drawable.background);
                     clickedBtn = asc;
+
                 }
 
                 ImageView checked=(ImageView)parentview.findViewById(R.id.checked);
