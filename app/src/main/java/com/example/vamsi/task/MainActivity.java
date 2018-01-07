@@ -196,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if(sortBy.contains("updated")){
                     b1.setBackgroundResource(R.drawable.background);
                     clickedBtn = b2;
-
                 }
                 from.setText(fromDate);
                 to.setText(toDate);
