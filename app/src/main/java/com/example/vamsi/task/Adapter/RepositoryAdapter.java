@@ -49,21 +49,25 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Cu
     public void onBindViewHolder(CustomViewHolder holder, final int position) {
 
         try {
-            JSONObject currestRepo = object.getJSONObject(position);
+             final JSONObject currestRepo = object.getJSONObject(position);
             Log.i("dd",currestRepo.toString());
-            final JSONObject owner=currestRepo.getJSONObject("owner");
+
             holder.name.setText(currestRepo.getString("name"));
             holder.data.setText(currestRepo.getString("full_name"));
             holder.eye.setText(currestRepo.getString("watchers_count"));
             holder.star.setText(currestRepo.getString("stargazers_count"));
             holder.link.setText(currestRepo.getString("forks"));
-
+            JSONObject owner=currestRepo.getJSONObject("owner");
+                String images=owner.getString("avatar_url");
+                Log.i("images",images);
+            Picasso.with(context).load(images).into(holder.image);
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i=new Intent(context, MainActivity2.class);
                     try {
-                        i.putExtra("currentrep",owner.getJSONObject(String.valueOf(position)).toString());
+                        i.putExtra("currentrep",object.getJSONObject(position).toString());
+                        Log.i("aa",currestRepo.getJSONObject(String.valueOf(position)).toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -101,7 +105,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Cu
             super(itemView);
 
             cardView=(CardView)itemView.findViewById(R.id.card);
-            image=(ImageView)itemView.findViewById(R.id.image);
+            image=(ImageView)itemView.findViewById(R.id.iconimage);
             name=(TextView)itemView.findViewById(R.id.name);
             data=(TextView)itemView.findViewById(R.id.data);
             eye=(TextView)itemView.findViewById(R.id.eye);

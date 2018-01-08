@@ -63,7 +63,9 @@ public class ScrollingActivity extends AppCompatActivity {
 
         repo_url=getIntent().getStringExtra("repo");
         Log.i("repos",repo_url);
-
+        repositoryAdapter=new RepositoryAdapter(ScrollingActivity.this,new JSONArray());
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(ScrollingActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
 
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(repo_url, new Response.Listener<JSONArray>() {
             @Override
@@ -71,6 +73,8 @@ public class ScrollingActivity extends AppCompatActivity {
                 Log.i("repos",repo_url);
                 progressDialog.dismiss();
                 JSONArray data=response;
+
+                recyclerView.setAdapter(repositoryAdapter);
                 RepositoryAdapter.dataChanged(data);
             }
         }, new Response.ErrorListener() {
@@ -81,10 +85,7 @@ public class ScrollingActivity extends AppCompatActivity {
         });
         mySingleton.getInstance(ScrollingActivity.this).addToRequestQueue(jsonArrayRequest);
 
-        repositoryAdapter=new RepositoryAdapter(ScrollingActivity.this,new JSONArray());
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(ScrollingActivity.this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(repositoryAdapter);
+
 
 
     }
