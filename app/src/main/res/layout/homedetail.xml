@@ -49,7 +49,7 @@
                     android:gravity="center|left"
                     android:layout_marginLeft="@dimen/margin10"
                     android:text="afsrhddtfjsrtjstrjtrjjyrietjh"
-                    android:layout_marginTop="@dimen/margin10"
+                    android:layout_marginTop="@dimen/margin5"
                     android:visibility="visible"
                     android:textColor="@color/black"
                     android:textSize="@dimen/textsize" />
