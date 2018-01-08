@@ -10,11 +10,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.vamsi.task.Class.Contributors;
 import com.example.vamsi.task.MainActivity;
 import com.example.vamsi.task.MainActivity2;
 import com.example.vamsi.task.R;
 import com.example.vamsi.task.ScrollingActivity;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,33 +35,46 @@ public class ContributorsAdapter extends RecyclerView.Adapter<ContributorsAdapte
     Context context;
     LayoutInflater inflater;
     MainActivity2 activityClass;
-    public ContributorsAdapter(MainActivity2 activityClass) {
-        this.activityClass=activityClass;
+    List<Contributors> data;
+
+    public ContributorsAdapter(Context context, List<Contributors> data) {
+    this.context=context;
+    this.data=data;
+        inflater= LayoutInflater.from(context);
     }
 
 
     @Override
     public ContributorsAdapter.CustomViewAdapter onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = activityClass.getLayoutInflater().inflate(R.layout.contributorsdetail, null);
+        View v =inflater.inflate(R.layout.contributorsdetail, null);
         return new CustomViewAdapter(v);
     }
 
     @Override
-    public void onBindViewHolder(ContributorsAdapter.CustomViewAdapter holder, int position) {
+    public void onBindViewHolder(ContributorsAdapter.CustomViewAdapter holder, final int position) {
+
+        final Contributors items=data.get(position);
+        holder.name.setText(items.getName());
+        Picasso.with(context).load(items.getImage()).into(holder.circleImageView);
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent j=new Intent(activityClass, ScrollingActivity.class);
-                activityClass.startActivity(j);
+                Intent j=new Intent(context, ScrollingActivity.class);
+                j.putExtra("name" ,data.get(position).getName() );
+                j.putExtra("image" ,data.get(position).getImage() );
+                j.putExtra("repo" ,data.get(position).getRepo() );
+                context.startActivity(j);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return data.size();
     }
+
+
 
     public class CustomViewAdapter extends RecyclerView.ViewHolder {
         LinearLayout linearLayout;

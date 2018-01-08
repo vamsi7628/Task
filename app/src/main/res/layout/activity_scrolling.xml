@@ -20,6 +20,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="center|bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
             <LinearLayout
@@ -28,27 +29,17 @@
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:background="@drawable/back"
-                android:layout_height="250dp">
+                android:layout_height="@dimen/app_bar_height">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center"
-                    android:id="@+id/iamge"
+                    android:id="@+id/image_repo"
                     android:src="@drawable/empty_photo"
                     app:civ_fill_color="@color/white"
                     app:civ_border_color="@android:color/white"
                     app:civ_border_width="4dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Hey"
-                    android:textStyle="bold"
-                    android:layout_margin="10dp"
-                    android:textSize="20sp"/>
 
             </LinearLayout>
             <android.support.v7.widget.Toolbar
